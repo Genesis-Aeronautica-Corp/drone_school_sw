@@ -64,6 +64,7 @@ Besides the main app some dependencies have to be manually installed via [homebr
     ```
   - After Homebrew is installed run the following command in the Terminal:
     ```bash
+    brew update
     brew install qt6 gstreamer sdl2 zeromq
     ```
 
