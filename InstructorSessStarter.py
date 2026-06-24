@@ -3,6 +3,7 @@ import json
 import logging
 import uuid
 import subprocess
+import signal
 from utils import post_request
 
 logger = logging.getLogger("InstructorSessStarter")
@@ -202,15 +203,23 @@ def main():
     logger.info("Inviting client")
 
     while True:
+        proc = subprocess.Popen(INVITE_CMD + [f"client-{session_id[-8:]}"])
         try:
-            subprocess.run(INVITE_CMD + [f"client-{session_id[-8:]}"])
+            proc.wait()
         except KeyboardInterrupt:
+            proc.send_signal(signal.SIGINT)
+            try:
+                proc.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait()
+
             r = input("Type 'restart' to restart invite service: ")
             if r != "restart":
                 break
 
     close_session(session_id, jwt)
-    
+
     return 0
 
 
@@ -220,4 +229,5 @@ if __name__ == "__main__":
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
     import sys
+
     sys.exit(main())
