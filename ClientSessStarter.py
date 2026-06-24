@@ -185,7 +185,8 @@ if __name__ == "__main__":
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
         handlers=[
             logging.FileHandler(
-                f"ClientSessStarter_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+                f"ClientSessStarter_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log",
+                encoding="utf-8",
             ),
         ],
     )
