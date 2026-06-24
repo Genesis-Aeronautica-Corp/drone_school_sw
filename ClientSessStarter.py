@@ -158,11 +158,15 @@ def main():
     print("\n\n\n🌐 Tailscale started, you are ready to work")
     print("⚠️ Don't close this script until the end of yout flight session")
     print(
-        "ℹ️ To close simply hit Ctrl+C on your keyboard (works only in English mode)\n\n"
+        "ℹ️ To close simply hit Enter on your keyboard\n\n"
     )
     try:
         while True:
-            time.sleep(0.25)
+            inp = input()
+            if inp == "":
+                logger.info("Interrupted by user")
+                break
+            
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
 
@@ -182,4 +186,5 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
-    main()
+    import sys
+    sys.exit(main())

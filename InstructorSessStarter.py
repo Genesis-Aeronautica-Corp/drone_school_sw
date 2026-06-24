@@ -210,6 +210,8 @@ def main():
                 break
 
     close_session(session_id, jwt)
+    
+    return 0
 
 
 if __name__ == "__main__":
@@ -217,4 +219,5 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
-    main()
+    import sys
+    sys.exit(main())

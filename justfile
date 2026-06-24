@@ -1,3 +1,21 @@
+# choose shell
+set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
+set shell := ["bash", "-c"]
+
+[windows]
+install:
+  winget install -e --id Python.Python.3.13
+  pip install pyinstaller requests --break
+
+[macos]
+install:
+  pip install pyinstaller requests --break  
+  
+[linux]
+install:
+  pip install pyinstaller requests --break 
+  echo 'PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+
 [linux]
 build:
   rm -rf dist build
@@ -10,11 +28,13 @@ build:
 
 [windows]
 build:
+  rm -r -fo dist\*
+  rm -r -fo build\*
   pyinstaller ClientSessStarter.py --onefile -n "ClientSessStarter_x86-64_windows.exe" --console --bootloader-ignore-signals
 
 [linux]
 run:
-  dist/ClientSessStarter_x86-64_Ubuntu
+  dist/ClientSessStarter_x86-64_Ubuntu.sh
 
 [macos]
 run:
@@ -22,4 +42,4 @@ run:
 
 [windows]
 run:
-  dist\ClientSessStarter_x86-64_windows.exe
+  .\dist\ClientSessStarter_x86-64_windows.exe
