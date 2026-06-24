@@ -211,8 +211,13 @@ def main():
             try:
                 proc.wait(timeout=3)
             except subprocess.TimeoutExpired:
-                proc.kill()
-                proc.wait()
+                proc.send_signal(signal.SIGINT)
+                try:
+                    proc.wait(timeout=3)
+                except subprocess.TimeoutExpired:
+                    logger.warning("Invite service process hanging, kill it")
+                    proc.kill()
+                    proc.wait()
 
             r = input("Type 'restart' to restart invite service: ")
             if r != "restart":
