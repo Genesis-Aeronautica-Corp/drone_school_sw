@@ -121,14 +121,12 @@ def main():
         logger.error("Can't login to RFD")
         return 1
 
-    logger.info("Auth success")
-
     jwt = res.get("jwt")
     if jwt is None:
         logger.error("Can't decode JWT")
         return 1
 
-    logger.info("User authentication success")
+    print("✅ User authentication success")
 
     missions = get_missions(jwt, email)
     if missions is None:
@@ -148,7 +146,7 @@ def main():
     if vpn_conn is None:
         return 1
 
-    logger.info("Starting Tailscale")
+    print("⚙️ Starting Tailscale")
 
     tsm = TSManager(logger.info)
     if not tsm.start(vpn_conn.token, vpn_conn.hostname):
@@ -157,16 +155,14 @@ def main():
 
     print("\n\n\n🌐 Tailscale started, you are ready to work")
     print("⚠️ Don't close this script until the end of yout flight session")
-    print(
-        "ℹ️ To close simply hit Enter on your keyboard\n\n"
-    )
+    print("ℹ️ To close simply hit Enter on your keyboard\n\n")
     try:
         while True:
             inp = input()
             if inp == "":
                 logger.info("Interrupted by user")
                 break
-            
+
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
 
@@ -176,15 +172,23 @@ def main():
     if not delete_vpn_connection(jwt, vpn_conn.token_hash, vpn_conn.hostname):
         logger.error("Can't delete VPN credentials from RFD")
 
-    logger.info("Exiting")
+    print("🤝 Exiting")
 
     return 0
 
 
 if __name__ == "__main__":
+    import datetime
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+        handlers=[
+            logging.FileHandler(
+                f"ClientSessStarter_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+            ),
+        ],
     )
     import sys
+
     sys.exit(main())
