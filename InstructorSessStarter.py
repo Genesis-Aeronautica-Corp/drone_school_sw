@@ -219,8 +219,12 @@ def main():
                     proc.kill()
                     proc.wait()
 
-            r = input("Type 'restart' to restart invite service: ")
-            if r != "restart":
+            try:
+                r = input("Type 'restart' to restart invite service: ")
+                if r != "restart":
+                    break
+            except KeyboardInterrupt:
+                print("Exiting")
                 break
 
     close_session(session_id, jwt)
