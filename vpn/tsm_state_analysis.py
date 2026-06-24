@@ -28,7 +28,7 @@ def is_tailscale_installed(self) -> str | bool:
 
     if self.os_code == 1:
         logger.info("Searching TS on mac gui")
-        gui_path = self.find_gui_tailscale_path_macos()
+        gui_path = find_gui_tailscale_path_macos(self)
         if gui_path and os.path.exists(gui_path):
             self.is_installed.set()
             self.mac_os_gui_flg.set()
