@@ -94,8 +94,8 @@ def delete_vpn_connection(jwt, token_hash, hostname) -> bool:
 
 
 def main():
-    email = input("Enter email:")
-    psswd = input("Enter password:")
+    email = input("Enter email: ")
+    psswd = input("Enter password: ")
 
     res = post_request(
         url=RFD_AUTH_URL + "/login",
