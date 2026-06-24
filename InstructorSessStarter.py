@@ -168,10 +168,14 @@ def main():
     if not pswd:
         pswd = input("Enter password: ")
 
+    json.dump({"email": email, "password": pswd}, open("credentials.json", "w"))
+
     jwt = gcs_auth(email, pswd)
     if not jwt:
         logger.error("Failed to authenticate in RFD")
         return 1
+
+    logger.info("Auth success")
 
     missions = get_missions(jwt)
     if not missions:
@@ -205,7 +209,7 @@ def main():
             if r != "restart":
                 break
 
-    close_session(mission_id, jwt)
+    close_session(session_id, jwt)
 
 
 if __name__ == "__main__":

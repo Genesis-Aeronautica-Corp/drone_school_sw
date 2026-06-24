@@ -1,3 +1,5 @@
+import os
+import json
 from typing import List
 from dataclasses import dataclass
 import logging
@@ -94,8 +96,19 @@ def delete_vpn_connection(jwt, token_hash, hostname) -> bool:
 
 
 def main():
-    email = input("Enter email: ")
-    psswd = input("Enter password: ")
+    email = None
+    psswd = None
+    if os.path.exists("credentials.json"):
+        creds = json.load(open("credentials.json"))
+        email = creds["email"]
+        psswd = creds["password"]
+
+    if not email:
+        email = input("Enter email: ")
+    if not psswd:
+        psswd = input("Enter password: ")
+
+    json.dump({"email": email, "password": psswd}, open("credentials.json", "w"))
 
     res = post_request(
         url=RFD_AUTH_URL + "/login",
@@ -106,6 +119,8 @@ def main():
     if res is None:
         logger.error("Can't login to RFD")
         return 1
+
+    logger.info("Auth success")
 
     jwt = res.get("jwt")
     if jwt is None:
