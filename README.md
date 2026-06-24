@@ -1,5 +1,10 @@
 # Software kit for Remote Drone School
 
+- [На русском](https://github.com/Genesis-Aeronautica-Corp/drone_school_sw/blob/main/README_RU.md)
+- [En español](https://github.com/Genesis-Aeronautica-Corp/drone_school_sw/blob/main/README_ES.md)
+
+## Table of contents
+
 1. [Getting Started](#getting-started)
     - [Student](#student)
     - [Instructor](#instructor)
