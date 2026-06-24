@@ -1,9 +1,11 @@
 [linux]
 build:
-  pyinstaller ClientSessStarter.py --onefile -n "ClientSessStarter_x86-64_Ubuntu" --console --bootloader-ignore-signals
+  rm -rf dist build
+  pyinstaller ClientSessStarter.py --onefile -n "ClientSessStarter_x86-64_Ubuntu.sh" --console --bootloader-ignore-signals
 
 [macos]
 build:
+  rm -rf dist build
   pyinstaller ClientSessStarter.py --onefile -n "ClientSessStarter_MacOS" --console --bootloader-ignore-signals
 
 [windows]

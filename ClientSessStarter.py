@@ -96,6 +96,7 @@ def delete_vpn_connection(jwt, token_hash, hostname) -> bool:
 
 
 def main():
+    print("👋 Welcome to the Remote Flight Session Starter\n")
     email = None
     psswd = None
     if os.path.exists("credentials.json"):
@@ -154,10 +155,10 @@ def main():
         logger.error("Can't start Tailscale")
         return 1
 
-    logger.info("Tailscale started, you are ready to work")
-    logger.info("Don't close this script until the end of yout flight session")
-    logger.info(
-        "To close simply hit Ctrl+C on your keyboard (works only in English mode)"
+    print("\n\n\n🌐 Tailscale started, you are ready to work")
+    print("⚠️ Don't close this script until the end of yout flight session")
+    print(
+        "ℹ️ To close simply hit Ctrl+C on your keyboard (works only in English mode)\n\n"
     )
     try:
         while True:
