@@ -1,3 +1,6 @@
 .env
 __pycache__/
 credentials.json
+dist/
+*.spec
+build/
