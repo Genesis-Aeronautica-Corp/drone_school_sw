@@ -21,6 +21,7 @@
 #### System Requirements:
 
 - 8 Gb RAM
+- 7 GB disk space
 - Intel Core i3 / Ryzen 3 CPU
 - Stable Internet connection (the best option is via Ethernet cable)
 - Supported OS:

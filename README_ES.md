@@ -18,6 +18,7 @@
 #### Requisitos del sistema:
 
 - 8 GB de RAM
+- 7 GB del almacenamiento en disco
 - Procesador Intel Core i3 / Ryzen 3
 - Conexión a Internet estable (la mejor opción es mediante cable Ethernet)
 - Sistemas operativos compatibles:
