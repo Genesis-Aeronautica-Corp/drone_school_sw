@@ -1,3 +1,5 @@
+from pathlib import Path
+import sys
 import os
 import json
 import logging
@@ -17,6 +19,14 @@ RFD_URL = f"https://{RFD_DOMAIN_NAME}/connections"
 RFD_MM_URL = f"https://{RFD_DOMAIN_NAME}/missions"
 RFD_START_SESS_URL = RFD_URL + "/start-session"
 RFD_GCS_SESS_FINISH_URL = RFD_URL + "/close-session"
+
+BASE_PATH = Path()
+
+if getattr(sys, "frozen", False):
+    BASE_PATH = Path(sys.executable).parent
+else:
+    BASE_PATH = Path(__file__).parent
+
 
 # ============================
 # RFD Registration and Session
@@ -159,8 +169,8 @@ def main():
 
     email = None
     pswd = None
-    if os.path.exists("credentials.json"):
-        creds = json.load(open("credentials.json"))
+    if os.path.exists(BASE_PATH / "credentials.json"):
+        creds = json.load(open(BASE_PATH / "credentials.json"))
         email = creds["email"]
         pswd = creds["password"]
 
@@ -169,7 +179,7 @@ def main():
     if not pswd:
         pswd = input("Enter password: ")
 
-    json.dump({"email": email, "password": pswd}, open("credentials.json", "w"))
+    json.dump({"email": email, "password": pswd}, open(BASE_PATH / "credentials.json", "w"))
 
     jwt = gcs_auth(email, pswd)
     if not jwt:
@@ -237,6 +247,5 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
-    import sys
 
     sys.exit(main())

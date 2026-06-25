@@ -5,3 +5,5 @@ dist/
 *.spec
 build/
 *.log
+logs/
+.DS_Store
