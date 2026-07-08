@@ -4,14 +4,10 @@ import os
 import json
 import logging
 import uuid
-import subprocess
-import signal
 from utils import post_request
 
 logger = logging.getLogger("InstructorSessStarter")
 
-# HAS TO BE REDEFINIED FOR THE HOST
-INVITE_CMD = ["ros2", "run", "frontend", "efga"]
 
 # Base URL to communicate with Remote Flights Dispatcher (RFD)
 RFD_DOMAIN_NAME = "prod.rfd.genesisaero.org"
@@ -163,9 +159,6 @@ def close_session(session_id, jwt) -> bool:
 
 
 def main():
-    if len(INVITE_CMD) == 0:
-        logger.error("No invite command specified")
-        return 1
 
     email = None
     pswd = None
@@ -179,7 +172,9 @@ def main():
     if not pswd:
         pswd = input("Enter password: ")
 
-    json.dump({"email": email, "password": pswd}, open(BASE_PATH / "credentials.json", "w"))
+    json.dump(
+        {"email": email, "password": pswd}, open(BASE_PATH / "credentials.json", "w")
+    )
 
     jwt = gcs_auth(email, pswd)
     if not jwt:
@@ -210,32 +205,7 @@ def main():
 
     logger.info("Session created")
 
-    logger.info("Inviting client")
-
-    while True:
-        proc = subprocess.Popen(INVITE_CMD + [f"client-{session_id[-8:]}"])
-        try:
-            proc.wait()
-        except KeyboardInterrupt:
-            proc.send_signal(signal.SIGINT)
-            try:
-                proc.wait(timeout=3)
-            except subprocess.TimeoutExpired:
-                proc.send_signal(signal.SIGINT)
-                try:
-                    proc.wait(timeout=3)
-                except subprocess.TimeoutExpired:
-                    logger.warning("Invite service process hanging, kill it")
-                    proc.kill()
-                    proc.wait()
-
-            try:
-                r = input("Type 'restart' to restart invite service: ")
-                if r != "restart":
-                    break
-            except KeyboardInterrupt:
-                print("Exiting")
-                break
+    input("\n\nPress Enter to close the session")
 
     close_session(session_id, jwt)
 

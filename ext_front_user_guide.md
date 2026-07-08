@@ -65,7 +65,7 @@ Besides the main app some dependencies have to be manually installed via [homebr
   - After Homebrew is installed run the following command in the Terminal:
     ```bash
     brew update
-    brew install qt6 gstreamer sdl2 zeromq
+    brew install qt6 gstreamer sdl2
     ```
 
   - Finally, you should give our application permissions to run:
@@ -77,9 +77,11 @@ The application logs are stored in `~/Library/Application\ Support/ExternalFront
 
 ## App usage
 
-Currently, due to some security reasons, `External Frontend` has to be invited by the `Backend` to operate. That's why when you run the app you will see a dialog which asks you to wait. 
-
-Backend administrator will invite you to the app and you will be able to start using it.
+1. After launching the app you will see the connection dialog where you need to specify connection to the `backend` you want to work with. 
+2. If you operate in the same Tailscale network you can use `Scan Tailnet` button to automatically discovery running backends.
+3. If scanning failed you can also manually specify the IP address or DNS name (including [Tailscale MagicDNS](https://tailscale.com/docs/features/magicdns)) of the backend.
+4. `Connect` button will connect you to the backend and launch the main application window.
+5. Connection process can be interrupted by `Cancel` button.
 
 ## Troubleshooting
 
@@ -93,5 +95,5 @@ Backend administrator will invite you to the app and you will be able to start u
   - Run `sudo xattr -cr /Applications/ExternalFrontend.app`. 
   - If the file is missing, go to our `.dmg`, run it again and make sure you drag the icon of our app into the `Applications` folder.
 
-- MacOS appication fails to run silently without any feedback.
+- MacOS application fails to run silently without any feedback.
   - Make sure you have installed all the necessary dependencies via `homebrew`.
