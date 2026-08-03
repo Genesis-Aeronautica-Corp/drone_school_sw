@@ -10,7 +10,7 @@ logger = logging.getLogger("InstructorSessStarter")
 
 
 # Base URL to communicate with Remote Flights Dispatcher (RFD)
-RFD_DOMAIN_NAME = "prod.rfd.genesisaero.org"
+RFD_DOMAIN_NAME = "prod.rfd.geneaero.com"
 RFD_URL = f"https://{RFD_DOMAIN_NAME}/connections"
 RFD_MM_URL = f"https://{RFD_DOMAIN_NAME}/missions"
 RFD_START_SESS_URL = RFD_URL + "/start-session"

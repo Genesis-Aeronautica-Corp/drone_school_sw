@@ -12,7 +12,7 @@ from utils import post_request
 logger = logging.getLogger("SessStarter")
 
 # === Constants ===
-RFD_DOMAIN_NAME = "prod.rfd.genesisaero.org"
+RFD_DOMAIN_NAME = "prod.rfd.geneaero.com"
 RFD_MM_URL = f"https://{RFD_DOMAIN_NAME}/missions"
 RFD_URL = f"https://{RFD_DOMAIN_NAME}/connections"
 RFD_CONNECT_URL = f"{RFD_URL}/get-vpn-connection"
@@ -135,7 +135,9 @@ def main():
 
     print("✅ User authentication success")
 
-    json.dump({"email": email, "password": psswd}, open(BASE_PATH / "credentials.json", "w"))
+    json.dump(
+        {"email": email, "password": psswd}, open(BASE_PATH / "credentials.json", "w")
+    )
 
     missions = get_missions(jwt, email)
     if missions is None:
