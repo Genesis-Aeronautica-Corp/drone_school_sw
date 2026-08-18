@@ -4,6 +4,9 @@ import logging
 
 from utils.safe_subprocess import safe_subp_run
 
+from vpn.tsm_state_analysis import is_tailscaled_running
+
+
 logger = logging.getLogger("Vpn")
 
 
@@ -24,7 +27,7 @@ def start_tailscaled(self) -> bool:
 
             # Give some time for tailscaled to initialize
             for _ in range(10):
-                self.is_tailscaled_running()
+                is_tailscaled_running(self)
                 time.sleep(1.5)
                 if self.tsd_running.is_set():
                     logger.info("tailscaled is now running")
@@ -43,7 +46,7 @@ def start_tailscaled(self) -> bool:
             safe_subp_run(command=["open", "-a", self.ts_bin_path], background=True)
             logger.info("Tailscale GUI launched to trigger tailscaled")
             for _ in range(10):
-                self.is_tailscaled_running()
+                is_tailscaled_running(self)
                 time.sleep(1.5)
                 if self.tsd_running.is_set():
                     logger.info("tailscaled started via GUI")
@@ -76,7 +79,7 @@ def start_tailscaled(self) -> bool:
         )
 
         for _ in range(10):
-            self.is_tailscaled_running()
+            is_tailscaled_running(self)
             time.sleep(1.5)
             if self.tsd_running.is_set():
                 logger.info("tailscaled is now running")
