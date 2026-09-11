@@ -26,7 +26,7 @@
 - Stable Internet connection (the best option is via Ethernet cable)
 - Supported OS versions (those in braces don't have official support but are expected to work):
   - Windows 11 (10)
-  - Ubuntu 26.04 (24.04)
+  - Ubuntu 26.04
   - MacOS 26 (15, 14)
 
 #### Download and install
