@@ -26,7 +26,7 @@
 - Conexión a Internet estable (la mejor opción es mediante cable Ethernet)
 - Versiones de SO compatibles (las que están entre paréntesis no cuentan con soporte oficial, pero se espera que funcionen):
   - Windows 11 (10)
-  - Ubuntu 26.04 (24.04)
+  - Ubuntu 26.04
   - MacOS 26 (15, 14)
 
 #### Descarga e instalación
