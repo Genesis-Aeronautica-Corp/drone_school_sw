@@ -6,94 +6,95 @@
 
 This section describes how to start using the `External Frontend` on your computer for three currently supported OS.
 
-### Ubuntu (24.04, 26.04)
+**Note on OS version support:**
+> The version listed first (without parentheses)
+> is officially supported and recommended. Versions in parentheses
+> are expected to work but receive no official support guarantees.
 
-The app is distributed in a form of `.tar.gz` archive with `install.sh` script and main executable file inside.
-
-1. Unpack archive by double-clicking with your mouse on it.
-  - Alternatively use command line:
-    ```bash
-    tar -zxf ExternalFrontend*tar.gz
-    ```
-
-2. Go inside the directory using the `Files` application, right-click on `install.sh` and select `Run`. This will install the necessary libraries.
-  - CLI:
-    ```bash
-    cd ExternalFrontend*
-    ./install.sh
-    ```
-
-3. Run executable by right-clicking on `ExternalFrontend_<VERSION>.AppImage`.
-  - CLI:
-    ```bash
-    ./ExternalFrontend*
-    ```
-
-The application logs are stored in `~/.local/share/ExternalFrontend/`.
-
-### Windows 11
+### Windows 11 (10)
 
 The app is distributed in a form of `.exe` file which installs the app on the computer.
 
-The app requires two key dependencies which prompt to install themselves during our app installation: `Gstreamer` and `Tailscale`.
+The installer will prompt to install `Tailscale`, please do it since it's required for remote connectivity.
 
-While the latter will be prompted to install by our installer (so you don't need to download anything), `Gstreamer` has to be downloaded and installed manually:
-1. Copy [the link](https://gstreamer.freedesktop.org/data/pkg/windows/1.28.4/msvc/gstreamer-1.0-msvc-x86_64-1.28.4.exe) to your browser's address line.
-  - Alternatively visit [Gstreamer website](https://gstreamer.freedesktop.org/download/#windows) and download `MSVC x86_64 (VS 2022, Release CRT)` file.
-2. Run downloaded gstreamer installer from your computer's `Downloads` folder and proceed with instructions:
-  - **IMPORTANT:** When Gstreamer prompts whether to install itself for current user only or for all users - choose `Install for all users` (requires administrator privileges).
-  - Almost all steps should be left with default settings (it's important to install `Gstreamer` in the default system path `C:\Program Files\gstreamer\`).
-    - The only exception is that it's highly recommended to **turn ON** the following options on the `Select Additional Tasks` step:
-    - `Set or update the GSTREAMER_1_0_ROOT_MSVC_X86_64 environtment variable`
-    - `Set or update the GStreamer1.0 Registry variable`.
+**Note:** First launch of the app can take quite a while (up to a minute) because of initialization. Next launches will be fast.
 
 The application logs are stored in `C:\Users\<USERNAME>\AppData\Local\ExternalFrontend\`.
 
-### MacOS (14, 15, 26)
+### MacOS 26 (15, 14)
 
 The app is distributed via `.dmg` file which installs the app on the computer. Just install it the normal way, dragging our app to the `Applications` folder.
 
-Besides the main app some dependencies have to be manually installed via [homebrew](https://brew.sh) package manager.
-  - Open your terminal and run the command from [homebrew website](https://brew.sh):
-    ```bash
-    # Install developer tools
-    xcode-select --install 
+You should also give our application permissions to run itself. Just open the `Terminal` and execute command:
 
-    # Install homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
-  - After Homebrew is installed run the following command in the Terminal:
-    ```bash
-    brew update
-    brew install qt6 gstreamer sdl2 proj geos sqlite libtiff zlib
-    ```
+  ```bash
+  sudo xattr -cr /Applications/ExternalFrontend.app
+  ```
 
-  - Finally, you should give our application permissions to run:
+**IMPORTANT:** On the first launch you will be prompted to install `Tailscale` - the VPN client required for remote connectivity. Please give it all permissions it requests, it's critical for application's correct functioning.
+
+- You don't have to log into any Tailscale account. Just close their app once it's been installed.
+- If you already have `Tailscale` installed, the promt will not appear.
+- If your existing installation is `Homebrew CLI` version of `Tailscale` (not cask), please run the command to let `Tailscale` start without `sudo`:
+
     ```bash
-    sudo xattr -cr /Applications/ExternalFrontend.app
+    sudo tailscale set --operator=$USER
     ```
 
 The application logs are stored in `~/Library/Application\ Support/ExternalFrontend/`.
 
+### Ubuntu 26.04 (24.04)
+
+The app is distributed in a form of `.tar.gz` archive with `install.sh` script and main executable file inside.
+
+1. Unpack archive by double-clicking on it with the mouse.
+    - Alternatively use command line:
+
+        ```bash
+        tar -zxf ExternalFrontend*tar.gz
+        ```
+
+2. Go inside the directory using the `Files` application, right-click on `install.sh` and select `Run`. This will install the necessary libraries.
+    - CLI:
+
+        ```bash
+        cd ExternalFrontend*
+        ./install.sh
+        ```
+
+3. Run executable by right-clicking on `ExternalFrontend_<VERSION>.AppImage`.
+    - CLI:
+
+        ```bash
+        ./ExternalFrontend*
+        ```
+
+The application logs are stored in `~/.local/share/ExternalFrontend/`.
+
 ## App usage
 
-1. After launching the app you will see the connection dialog where you need to specify connection to the `backend` you want to work with. 
-2. If you operate in the same Tailscale network you can use `Scan Tailnet` button to automatically discovery running backends.
-3. If scanning failed you can also manually specify the IP address or DNS name (including [Tailscale MagicDNS](https://tailscale.com/docs/features/magicdns)) of the backend.
-4. `Connect` button will connect you to the backend and launch the main application window.
-5. Connection process can be interrupted by `Cancel` button.
+After launching the app you will see a wizard which guides you through the `Backend` connection process.
+
+1. On the starting screen you can either:
+    - Choose to proceed without `Backend` connection (for example, if you just want to use Mission Planner).
+    - Login into `Genesis Aeronautica Tailnet` using your email and password. It works only if your instructor has invited you before.
+    - Proceed without login and specify `Backend`'s connection address manually.
+2. On the second screen you have the following options:
+    - Once again to proceed without `Backend` connection.
+    - If you have logged into `Genesis Aeronautica Tailnet` (or you have your own `Tailnet` active) you can use `Scan Tailnet` button to automatically discover the `Backend`.
+    - Connect to `Backend` using the discovered or manually specified address.
+      - `Connect` button will connect you to the `Backend` and launch the main window of the app.
 
 ## Troubleshooting
 
-- Windows app fails to launch with due to `missing .dll files` error it's most likely that you have installed Gstreamer in an incorrect way. 
-  - Go to `Launch menu` -> `Add or remove programs`
-  - Uninstall Gstreamer there
-  - Then run our installer again and follow the above instructions for Windows precisely, especially make sure you install it for all users.
-
-- MacOS application fails to run and tells that the app is broken or corrupted. 
-  - Most likely you haven't give it permissions. 
-  - Run `sudo xattr -cr /Applications/ExternalFrontend.app`. 
+- MacOS application fails to run and tells that the app is broken or corrupted.
+  - Most likely you haven't give it permissions.
+  - Run `sudo xattr -cr /Applications/ExternalFrontend.app`.
   - If the file is missing, go to our `.dmg`, run it again and make sure you drag the icon of our app into the `Applications` folder.
 
-- MacOS application fails to run silently without any feedback.
-  - Make sure you have installed all the necessary dependencies via `homebrew`.
+- MacOS or Linux application hangs during the log-in process.
+  - Most likely you didn't disable `sudo` for `Tailscale` operation. Run the command:
+
+    ```bash
+    sudo tailscale set --operator=$USER
+    ```
