@@ -43,7 +43,7 @@ You should also give our application permissions to run itself. Just open the `T
 
 The application logs are stored in `~/Library/Application\ Support/ExternalFrontend/`.
 
-### Ubuntu 26.04 (24.04)
+### Ubuntu 26.04
 
 The app is distributed in a form of `.tar.gz` archive with `install.sh` script and main executable file inside.
 
